@@ -1,10 +1,16 @@
 package guru.springframework.domain;
 
-import jakarta.annotation.Generated;
+import java.util.Set;
+
+import org.hibernate.annotations.ManyToAny;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+
 
 @Entity
 public class Book {
@@ -15,6 +21,20 @@ public class Book {
   private Long id;
   private String title;
   private String isbn;
+
+  @ManyToAny
+  @JoinTable (name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
+    inverseJoinColumns = @JoinColumn(name = "author_id"))
+
+  private Set<Author> authors;
+
+  public Set<Author> getAuthors() {
+    return authors;
+  }
+
+  public void setAuthors(Set<Author> authors) {
+    this.authors = authors;
+  }
 
   public Long getId() {
     return this.id;
