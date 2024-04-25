@@ -1,4 +1,4 @@
-package guru.springframework.domain;
+package guru.springframework.spring6webapp.domain;
 
 import java.util.Set;
 
