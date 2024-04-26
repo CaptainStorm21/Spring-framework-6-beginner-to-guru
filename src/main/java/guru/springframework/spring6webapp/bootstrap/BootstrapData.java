@@ -1,24 +1,25 @@
 package guru.springframework.spring6webapp.bootstrap;
 
-import java.rmi.server.ExportException;
-
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-
 import guru.springframework.spring6webapp.domain.Author;
 import guru.springframework.spring6webapp.domain.Book;
+import guru.springframework.spring6webapp.domain.Publisher;
 import guru.springframework.spring6webapp.repositories.AuthorRepository;
 import guru.springframework.spring6webapp.repositories.BookRepository;
+import guru.springframework.spring6webapp.repositories.PublisherRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 @Component
 public class BootstrapData  implements CommandLineRunner{
 
   private final AuthorRepository authorRepository;
   private final BookRepository bookRepository;
+  private final PublisherRepository publisherRepository;
   
-  public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository){
+  public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository,  PublisherRepository publisherRepository){
     this.authorRepository = authorRepository;
     this.bookRepository=bookRepository;
+    this.publisherRepository = publisherRepository;
   }
 
 
@@ -57,14 +58,21 @@ public class BootstrapData  implements CommandLineRunner{
     System.out.println("Author: " + authorRepository.count());
     System.out.println("Books: " + bookRepository.count());
 
+    Publisher publisher = new Publisher();
+    publisher.setPublisherName("My Publisher");
+    publisher.setAddress("324 Rain street");
+    publisherRepository.save(publisher);
+
+    System.out.println("Publisher Count: " + publisherRepository.count());
+
   }
 
 }
 
 /*
-Summary
-we added the bootstrap data - BootstrapData Implements CommandLineRunner.
-We are annotating this with a Component annotation saying that this is a Spring component, so when
-Spring looks at the packages, it'll see this and then it will create a Spring bean for it.
-Remember Spring Data JPA is giving us the implementations for AuthorRepository and BookRepository.
+* Summary
+* we added the bootstrap data - BootstrapData Implements CommandLineRunner.
+* We are annotating this with a Component annotation saying that this is a Spring component, so when
+* Spring looks at the packages, it'll see this and then it will create a Spring bean for it.
+ * Remember Spring Data JPA is giving us the implementations for AuthorRepository and BookRepository.
  */
