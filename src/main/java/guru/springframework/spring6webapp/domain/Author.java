@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 
+import java.util.HashSet;
 import java.util.Set;
 
 // if we use jakarta persistence, 
@@ -19,9 +20,9 @@ public class Author {
   private String firstName;
   private String lastName;
 
-  // we are going to use annotation ManyToMany, meaning that we have have authors to many books
+  // we are going to use annotation ManyToMany, meaning that we have authors to many books
   @ManyToMany(mappedBy = "authors")
-  private Set<Book> books;
+  private Set<Book> books = new HashSet<>();
 
   public Set<Book> getBooks() {
     return books;
